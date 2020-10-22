@@ -1,5 +1,5 @@
-# Apps built while learning Javascript.
+## Simple Timer Animation
 
-## This is just the Main demo branch
+An animated timer built using **HTML**, **CSS** and **Javascript**.
 
 ##### Switch to the different branches for the respective projects
