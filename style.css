@@ -1,52 +1,48 @@
-.dial {
-  height: 400px;
-  width: 400px;
-}
-
-.timer {
-  position: relative;
-  display: inline-block;
-}
-
-* {
-  font: inherit;
-}
-
-body {
-  font-family: "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
-    "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.timer input {
-  display: block;
-  border: none;
-  width: 240px;
-  font-size: 90px;
+.tutorial {
+  width: 600px;
   text-align: center;
+  margin: auto;
 }
 
-.timer button {
-  border: none;
-  font-size: 36px;
-  cursor: pointer;
-}
-
-.timer button:focus {
-  outline: none;
-}
-
-.timer input:focus {
-  outline: none;
-}
-
-.controls {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+figure.image {
   display: flex;
   justify-content: center;
+  background-color: black;
+}
+
+figure .image img {
+  width: 128px;
+}
+
+.notification {
+  margin-top: 20px !important;
+}
+
+.results {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.title .icon {
+  margin-left: 15px;
+}
+
+.hero {
+  margin-bottom: 20px;
+}
+
+.forms {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dropdown-item {
+  display: flex;
   align-items: center;
-  flex-direction: column;
+  height: 60px;
+}
+
+.dropdown-item img {
+  height: 50px;
+  margin-right: 10px;
 }

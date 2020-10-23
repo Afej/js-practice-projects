@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="timer">
-      <div class="controls">
-        <input id="duration" value="3" />
-        <div>
-          <button id="start"><i class="fas fa-play"></i></button>
-          <button id="pause"><i class="fas fa-pause"></i></button>
+    <section class="hero is-primary is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Movie Fight
+            <span class="icon">
+              <i class="fas fa-film"></i>
+            </span>
+          </h1>
         </div>
       </div>
-      <svg class="dial">
-        <circle
-          fill="transparent"
-          stroke="green"
-          stroke-width="15"
-          r="190"
-          cx="0"
-          cy="200"
-          transform="rotate(-90 100 100)"
-        />
-      </svg>
-    </div>
+    </section>
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <div id="left-autocomplete"></div>
+          <div id="left-summary"></div>
+        </div>
+        <div class="column">
+          <div id="right-autocomplete"></div>
+          <div id="right-summary"></div>
+        </div>
+      </div>
 
-    <script src="timer.js"></script>
+      <div class="column is-half notification is-primary tutorial">
+        <h1 class="title">Search for a movie on both sides</h1>
+        <p class="subtitle">We will tell you which is best!</p>
+    </div>
+    <script src="utils.js"></script>
+    <script src="autocomplete.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

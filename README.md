@@ -1,3 +1,3 @@
-## Simple Timer Animation
+## Movie Fight App
 
-An animated timer built using **HTML**, **CSS** and **Javascript**.
+A movie comparison app built using **HTML**, **CSS**, **Javascript** and **Axios** with the **OMDb API**.
