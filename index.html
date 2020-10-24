@@ -1,48 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"
-    />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"
+      integrity="sha512-pi0tSRZdlNRZeANPwdAIHRAYg6gZZV6QlAiyHXn5TYqLzBKE9jlttO/QgYLMhISD6oNv2kPsVelx+n5nw0FqKA=="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      h1 {
+        color: white;
+        font-size: 64px;
+      }
+
+      .winner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        flex-direction: column;
+        z-index: 1;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      .reset {
+        padding: 15px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .reset:focus {
+        outline: none;
+      }
+
+      .reset:hover {
+        background-color: #18181d;
+        color: white;
+        border: 2px solid white;
+      }
+    </style>
+    <title>Maze</title>
   </head>
   <body>
-    <section class="hero is-primary is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Movie Fight
-            <span class="icon">
-              <i class="fas fa-film"></i>
-            </span>
-          </h1>
-        </div>
-      </div>
-    </section>
-    <div class="container">
-      <div class="columns">
-        <div class="column">
-          <div id="left-autocomplete"></div>
-          <div id="left-summary"></div>
-        </div>
-        <div class="column">
-          <div id="right-autocomplete"></div>
-          <div id="right-summary"></div>
-        </div>
-      </div>
-
-      <div class="column is-half notification is-primary tutorial">
-        <h1 class="title">Search for a movie on both sides</h1>
-        <p class="subtitle">We will tell you which is best!</p>
+    <div class="winner hidden">
+      <h1>You Win!</h1>
+      <button class="reset">Play Again</button>
     </div>
-    <script src="utils.js"></script>
-    <script src="autocomplete.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

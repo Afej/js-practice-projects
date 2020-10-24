@@ -1,148 +1,245 @@
-const autoCompleteConfig = {
-  renderOption(movie) {
-    const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
-    return `
-            <img src="${imgSrc}" />
-            ${movie.Title} (${movie.Year})
-          `;
-  },
-  inputValue(movie) {
-    return movie.Title;
-  },
-  async fetchData(searchTerm) {
-    const response = await axios.get("http://www.omdbapi.com/", {
-      params: {
-        apikey: "f669b4b1",
-        s: searchTerm,
-      },
-    });
+const initMaze = () => {
+  const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-    if (response.data.Error) {
-      return [];
-    }
+  const cellsHorizontal = 5;
+  const cellsVertical = 3;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-    return response.data.Search;
-  },
-};
+  const unitLengthX = width / cellsHorizontal;
+  const unitLengthY = height / cellsVertical;
 
-createAutoComplete({
-  root: document.querySelector("#left-autocomplete"),
-  ...autoCompleteConfig,
-  onOptionSelect(movie) {
-    document.querySelector(".tutorial").classList.add("is-hidden");
-    onMovieSelect(movie, document.querySelector("#left-summary"), "left");
-  },
-});
-
-createAutoComplete({
-  root: document.querySelector("#right-autocomplete"),
-  ...autoCompleteConfig,
-  onOptionSelect(movie) {
-    document.querySelector(".tutorial").classList.add("is-hidden");
-    onMovieSelect(movie, document.querySelector("#right-summary"), "right");
-  },
-});
-
-let leftMovie;
-let rightMovie;
-const onMovieSelect = async (movie, summaryEl, side) => {
-  const response = await axios.get("http://www.omdbapi.com/", {
-    params: {
-      apikey: "f669b4b1",
-      i: movie.imdbID,
+  const engine = Engine.create();
+  engine.world.gravity.y = 0;
+  const { world } = engine;
+  const render = Render.create({
+    element: document.body,
+    engine: engine,
+    options: {
+      wireframes: false,
+      width,
+      height,
     },
   });
 
-  summaryEl.innerHTML = movieTemplate(response.data);
+  Render.run(render);
+  Runner.run(Runner.create(), engine);
 
-  if (side === "right") {
-    rightMovie = response.data;
-  } else {
-    leftMovie = response.data;
-  }
+  // walls
+  const walls = [
+    Bodies.rectangle(width / 2, 0, width, 4, { isStatic: true }),
+    Bodies.rectangle(width / 2, height, width, 4, { isStatic: true }),
+    Bodies.rectangle(0, height / 2, 4, height, { isStatic: true }),
+    Bodies.rectangle(width, height / 2, 4, height, { isStatic: true }),
+  ];
+  World.add(world, walls);
 
-  if (rightMovie && leftMovie) {
-    runComparison();
-  }
-};
+  // Maze generation
 
-const runComparison = () => {
-  const leftSideStats = document.querySelectorAll(
-    "#left-summary .notification"
-  );
-  const rightSideStats = document.querySelectorAll(
-    "#right-summary .notification"
-  );
+  const shuffle = (arr) => {
+    let counter = arr.length;
 
-  leftSideStats.forEach((leftStat, index) => {
-    const rightStat = rightSideStats[index];
+    while (counter > 0) {
+      const index = Math.floor(Math.random() * counter);
 
-    const leftSideValue = parseInt(leftStat.dataset.value);
-    const rightSideValue = parseInt(rightStat.dataset.value);
+      counter--;
 
-    if (rightSideValue > leftSideValue) {
-      leftStat.classList.remove("is-primary");
-      leftStat.classList.add("is-warning");
-    } else {
-      rightStat.classList.remove("is-primary");
-      rightStat.classList.add("is-warning");
+      const temp = arr[counter];
+      arr[counter] = arr[index];
+      arr[index] = temp;
     }
+
+    return arr;
+  };
+
+  const grid = Array(cellsVertical)
+    .fill(null)
+    .map(() => Array(cellsHorizontal).fill(false));
+
+  const verticals = Array(cellsVertical)
+    .fill(null)
+    .map(() => Array(cellsHorizontal - 1).fill(false));
+
+  const horizontals = Array(cellsVertical - 1)
+    .fill(null)
+    .map(() => Array(cellsHorizontal).fill(false));
+
+  const startRow = Math.floor(Math.random() * cellsVertical);
+  const startColumn = Math.floor(Math.random() * cellsHorizontal);
+
+  const stepThroughCell = (row, column) => {
+    // if i have visted the cell at [row,column] , then return
+    if (grid[row][column]) {
+      return;
+    }
+
+    // mark this cell as visited
+    grid[row][column] = true;
+
+    // assemble randomly ordered list of neighbour
+    const neighbours = shuffle([
+      [row - 1, column, "up"],
+      [row, column + 1, "right"],
+      [row + 1, column, "down"],
+      [row, column - 1, "left"],
+    ]);
+
+    // for each neighbour
+    for (let neighbour of neighbours) {
+      const [nextRow, nextColumn, direction] = neighbour;
+
+      // ssee if that neighbour is out of bounds
+      if (
+        nextRow < 0 ||
+        nextRow >= cellsVertical ||
+        nextColumn < 0 ||
+        nextColumn >= cellsHorizontal
+      ) {
+        continue;
+      }
+
+      // if we have visted that neighbour, continue to next neighbour
+      if (grid[nextRow][nextColumn]) {
+        continue;
+      }
+
+      // remove a wall from either horinontals or verticals
+      if (direction === "left") {
+        verticals[row][column - 1] = true;
+      } else if (direction === "right") {
+        verticals[row][column] = true;
+      } else if (direction === "up") {
+        horizontals[row - 1][column] = true;
+      } else if (direction === "down") {
+        horizontals[row][column] = true;
+      }
+
+      // visit that next cell
+      stepThroughCell(nextRow, nextColumn);
+    }
+  };
+
+  stepThroughCell(startRow, startColumn);
+
+  horizontals.forEach((row, rowIndex) => {
+    row.forEach((open, columnIndex) => {
+      if (open) {
+        return;
+      }
+
+      const wall = Bodies.rectangle(
+        columnIndex * unitLengthX + unitLengthX / 2,
+        rowIndex * unitLengthY + unitLengthY,
+        unitLengthX,
+        5,
+        {
+          label: "wall",
+          isStatic: true,
+          render: {
+            fillStyle: "red",
+          },
+        }
+      );
+
+      World.add(world, wall);
+    });
+  });
+
+  verticals.forEach((row, rowIndex) => {
+    row.forEach((open, columnIndex) => {
+      if (open) {
+        return;
+      }
+
+      const wall = Bodies.rectangle(
+        columnIndex * unitLengthX + unitLengthX,
+        rowIndex * unitLengthY + unitLengthY / 2,
+        5,
+        unitLengthY,
+        {
+          label: "wall",
+          isStatic: true,
+          render: {
+            fillStyle: "red",
+          },
+        }
+      );
+
+      World.add(world, wall);
+    });
+  });
+
+  // goal
+  const goal = Bodies.rectangle(
+    width - unitLengthX / 2,
+    height - unitLengthY / 2,
+    unitLengthX * 0.7,
+    unitLengthY * 0.7,
+    {
+      label: "goal",
+      isStatic: true,
+      render: {
+        fillStyle: "green",
+      },
+    }
+  );
+
+  World.add(world, goal);
+
+  // ball
+  const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
+  const ball = Bodies.circle(unitLengthX / 2, unitLengthY / 2, ballRadius, {
+    label: "ball",
+    render: {
+      fillStyle: "blue",
+    },
+  });
+
+  World.add(world, ball);
+
+  document.addEventListener("keydown", (e) => {
+    const { x, y } = ball.velocity;
+
+    if (e.keyCode === 87 || e.code == "ArrowUp") {
+      Body.setVelocity(ball, { x, y: y - 5 });
+    }
+    if (e.keyCode === 68 || e.code == "ArrowRight") {
+      Body.setVelocity(ball, { x: x + 5, y });
+    }
+    if (e.keyCode === 83 || e.code == "ArrowDown") {
+      Body.setVelocity(ball, { x, y: y + 5 });
+    }
+    if (e.keyCode === 65 || e.code == "ArrowLeft") {
+      Body.setVelocity(ball, { x: x - 5, y });
+    }
+  });
+
+  // win condition
+  Events.on(engine, "collisionStart", (e) => {
+    e.pairs.forEach((collision) => {
+      const labels = ["ball", "goal"];
+
+      if (
+        labels.includes(collision.bodyA.label) &&
+        labels.includes(collision.bodyB.label)
+      ) {
+        document.querySelector(".winner").classList.remove("hidden");
+        world.gravity.y = 1;
+        world.bodies.forEach((body) => {
+          if (body.label === "wall") {
+            Body.setStatic(body, false);
+          }
+        });
+      }
+    });
   });
 };
 
-const movieTemplate = (movieDetail) => {
-  // const dollars = parseInt(
-  //   movieDetail.BoxOffice.replace(/\$/g, "").replace(/,/g, "")
-  // );
-  const metascore = parseInt(movieDetail.Metascore);
-  const runtime = parseInt(movieDetail.Runtime);
-  const imdbRating = parseFloat(movieDetail.imdbRating);
-  const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ""));
-  const awards = movieDetail.Awards.split(" ").reduce((prev, word) => {
-    const value = parseInt(word);
-    if (isNaN(value)) {
-      return prev;
-    } else {
-      return prev + value;
-    }
-  }, 0);
+// initialize game
+initMaze();
 
-  return `
-      <article class="media">
-        <figure class="media-left">
-        <p class="image">
-        <img src="${movieDetail.Poster}"/>
-        </p>
-        </figure>
-        <div class="media-content">
-          <div class="content">
-          <h1>${movieDetail.Title}</h1>
-          <h4>${movieDetail.Genre}</h4>
-          <p>${movieDetail.Plot}</p>
-          <p>${movieDetail.Released}</p>
-          </div>
-        </div>
-      </article>
-
-      <article data-value="${awards}" class="notification is-primary">
-        <p class="title">${movieDetail.Awards}</p>
-        <p class="subtitle">Awards</p>
-      </article>
-      <article data-value="${runtime}" class="notification is-primary">
-        <p class="title">${movieDetail.Runtime}</p>
-        <p class="subtitle">Run Time</p>
-      </article>
-      <article data-value="${metascore}" class="notification is-primary">
-        <p class="title">${movieDetail.Metascore}</p>
-        <p class="subtitle">Metascore</p>
-      </article>
-      <article data-value="${imdbRating}" class="notification is-primary">
-        <p class="title">${movieDetail.imdbRating}</p>
-        <p class="subtitle">IMDB Rating</p>
-      </article>
-      <article data-value="${imdbVotes}" class="notification is-primary">
-        <p class="title">${movieDetail.imdbVotes}</p>
-        <p class="subtitle">IMDB Votes</p>
-      </article>
-`;
-};
+// reset game
+// const resetBtn = document.querySelector(".reset");
+// resetBtn.addEventListener("click", () => {
+//   initMaze();
+// });

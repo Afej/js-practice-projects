@@ -1,3 +1,3 @@
-## Movie Fight App
+## Maze App
 
-A movie comparison app built using **HTML**, **CSS**, **Javascript** and **Axios** with the **OMDb API**.
+A Maze game built using **HTML**, **Javascript** and **Matter JS**.
