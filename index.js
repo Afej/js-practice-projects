@@ -239,7 +239,8 @@ const initMaze = () => {
 initMaze();
 
 // reset game
-// const resetBtn = document.querySelector(".reset");
-// resetBtn.addEventListener("click", () => {
-//   initMaze();
-// });
+const resetBtn = document.querySelector("button");
+resetBtn.addEventListener("click", () => {
+  // initMaze();
+  window.location.reload();
+});
