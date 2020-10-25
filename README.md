@@ -1,3 +1,3 @@
-## Secret Message
+## Node cli tools
 
-A Secret message app built using **HTML**, **Javascript** and **Materialize Css**.
+A node cli tool for getting files and doing some minor checks with **Node**, **Javascript**.
