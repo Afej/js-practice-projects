@@ -1,3 +1,3 @@
-## Maze App
+## Secret Message
 
-A Maze game built using **HTML**, **Javascript** and **Matter JS**.
+A Secret message app built using **HTML**, **Javascript** and **Materialize Css**.

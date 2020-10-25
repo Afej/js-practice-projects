@@ -3,60 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"
-      integrity="sha512-pi0tSRZdlNRZeANPwdAIHRAYg6gZZV6QlAiyHXn5TYqLzBKE9jlttO/QgYLMhISD6oNv2kPsVelx+n5nw0FqKA=="
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A=="
       crossorigin="anonymous"
-    ></script>
+    />
     <style>
-      body {
-        margin: 0;
-      }
-
-      .hidden {
-        display: none !important;
+      .row {
+        margin-top: 25vh;
       }
 
       h1 {
-        color: white;
-        font-size: 64px;
-      }
-
-      .winner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        flex-direction: column;
-        z-index: 1;
-        height: 100vh;
-        width: 100vw;
-      }
-
-      .reset {
-        padding: 15px 20px;
-        font-size: 20px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-      }
-
-      .reset:focus {
-        outline: none;
-      }
-
-      .reset:hover {
-        background-color: #18181d;
-        color: white;
-        border: 2px solid white;
+        margin-top: 0;
       }
     </style>
-    <title>Maze</title>
+    <title>Secret Message</title>
   </head>
   <body>
-    <div class="winner hidden">
-      <h1>You Win!</h1>
-      <button class="reset">Play Again</button>
+    <div class="row">
+      <div class="col s8 offset-s2">
+        <div class="card-panel" id="message-form">
+          <form>
+            <label for="">Enter a Secret Message</label>
+            <input type="text" id="message-input" />
+            <button class="btn">Create</button>
+          </form>
+        </div>
+
+        <div class="card-panel hide" id="link-form">
+          <div>
+            Share this link with a friend
+            <input type="text" id="link-input" />
+          </div>
+        </div>
+
+        <div id="message-show" class="card-panel hide">
+          <h1></h1>
+          <div>
+            <a href="./index.html">Create your own Secret Message</a>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="index.js"></script>
   </body>
