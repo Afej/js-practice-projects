@@ -1,38 +1,28 @@
-#!/usr/bin/env node
+const express = require("express");
+const bodyParser = require("body-parser");
 
-const chokidar = require("chokidar");
-const debounce = require("lodash.debounce");
-const program = require("caporal");
-const fs = require("fs");
-const { spawn } = require("child_process");
-const chalk = require("chalk");
+const app = express();
 
-program
-  .version("0.0.1")
-  .argument("[filename]", "Name of a file to execute")
-  .action(async ({ filename }) => {
-    const name = filename || "index.js";
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    try {
-      await fs.promises.access(name);
-    } catch (error) {
-      throw new Error(`could not find file ${name}`);
-    }
+app.get("/", (req, res) => {
+  res.send(`
+    <div>
+      <form method="POST">
+      <input name="email" placeholder="email"/>
+      <input name="password" placeholder="password"/>
+      <input name="password2" placeholder="confirm password"/>
+      <button>Sign up</button>
+      </form>
+    </div>
+  `);
+});
 
-    let proc;
-    const start = debounce(() => {
-      if (proc) {
-        proc.kill();
-      }
-      console.log(chalk.blue.bold(">>>> Starting process"));
-      proc = spawn("node", [name], { stdio: "inherit" });
-    }, 100);
+app.post("/", (req, res) => {
+  console.log(req.body);
+  res.send("Account created");
+});
 
-    chokidar
-      .watch(".")
-      .on("add", start)
-      .on("change", start)
-      .on("unlink", start);
-  });
-
-program.parse(process.argv);
+app.listen(3000, () => {
+  console.log("Listening");
+});

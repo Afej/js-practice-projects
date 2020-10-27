@@ -1,3 +1,3 @@
-## Node cli tools - Project runner
+## E commerce app
 
-A node cli tool for watching file changes in a directory with **Node**, **Javascript**.
+An E-Commerce app with **Node**, **Javascript**.
