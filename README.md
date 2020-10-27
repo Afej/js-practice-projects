@@ -1,3 +1,3 @@
-## Node cli tools
+## Node cli tools - Project runner
 
-A node cli tool for getting files and doing some minor checks with **Node**, **Javascript**.
+A node cli tool for watching file changes in a directory with **Node**, **Javascript**.

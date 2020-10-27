@@ -1,7 +1,7 @@
 {
-  "name": "js-practice-projects",
+  "name": "watchit",
   "version": "1.0.0",
-  "description": "A node cli tool for getting files in a system with **Node**, **Javascript**.",
+  "description": "A node cli tool for watching file changes in a directory with **Node**, **Javascript**.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/Afej/js-practice-projects#readme",
   "bin": {
-    "nls": "index.js"
+    "watchit": "index.js"
   },
   "dependencies": {
-    "chalk": "^4.1.0"
+    "caporal": "^1.4.0",
+    "chalk": "^4.1.0",
+    "chokidar": "^3.4.3",
+    "lodash.debounce": "^4.0.8"
   }
 }
