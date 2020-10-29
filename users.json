@@ -1,10 +1,5 @@
 [
   {
-    "email": "jdoe@gmail.com",
-    "password": "123456",
-    "id": "17cbb165"
-  },
-  {
     "email": "money@gmail.com",
     "password": "a5cb7b616a84776ec0ffba64ddb9b7087c3505cea667749a94f76ccf0c12225bb85df0ee5248f8b078eac3c28f0a6801d5ebe933400389fae352a865250e7488.02c1d5b2a296bc05",
     "id": "73ee4725"
@@ -13,20 +8,5 @@
     "email": "afekurojoshua@gmail.com",
     "password": "6c5f50b878128a9963dd3e12472589f154ecbf5ab4fcc6c7fba6ff3a9176f0126a7ebac52aaf14d0441c0a248a41aa3636d051108b8e5bbba5a27149af6b2ff2.6da07484b7fd0080",
     "id": "1446ffef"
-  },
-  {
-    "email": "afekurojoshua@gmail.com",
-    "password": "d6316745c4c486e34e4639b210bb49078dd1e2ce28d9b0696bbe3fd728099432b893413100b087b9e7d9baefbf4f73ca538e53b9b1063a199ee9f816d14f6022.c7bdaae15a584ed6",
-    "id": "4af4664f"
-  },
-  {
-    "email": "afekurojoshua@gmail.com",
-    "password": "6420b87d04374b7e6eb3cbe262dc8f9a1290e9e83a2d0b4a2e8de28c50e264d569bf305598091ae3eb0b28f20a0b10b23c2fd71aa6cb8e029fa173138dbb55df.b2a3d203f15ce7f0",
-    "id": "860c1b16"
-  },
-  {
-    "email": "afekurojoshua@gmail.com",
-    "password": "07842086dbd76ac80e9b2588a7a00eb9536b2b9723aaf82cfcd2e0f5102921db3f82ff2fceef15a045d381501314fef6d3ecd096cb33c9dc5f29e339fadbaa04.0d6aab898003529f",
-    "id": "091ae860"
   }
 ]
