@@ -1,3 +1,2 @@
-## E commerce app
+## Learning about testing in javascript.
 
-An E-Commerce app with **Node**,**Express**.
