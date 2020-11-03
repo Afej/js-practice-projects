@@ -1,0 +1,27 @@
+{
+  "name": "testing-framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Afej/js-practice-projects.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Afej/js-practice-projects/issues"
+  },
+  "homepage": "https://github.com/Afej/js-practice-projects#readme",
+  "bin": {
+    "tme": "index.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "jsdom": "^16.4.0"
+  }
+}

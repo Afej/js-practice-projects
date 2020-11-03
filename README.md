@@ -1,2 +1,1 @@
-## Learning about testing in javascript.
-
+## Building a testing framework in javascript.
